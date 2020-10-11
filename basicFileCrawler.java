@@ -94,47 +94,5 @@ public class basicFileCrawler{
     		System.out.println("Error\n:"+e);
     	}
     }
-    
- /*public void getResponseHeader(String link, String loc) 
- {
-		try {
- 
-			URL obj = new URL(link);
-			URLConnection conn = obj.openConnection();
-			Map<String, List<String>> map = conn.getHeaderFields();
- 
-			List<String> contentLength = map.get("Content-Length");
-			List<String> lastModified = map.get("Last-Modified");
-			
-			try {
-	    		//	File file = new File(loc);
-	    			FileWriter fstream = new FileWriter(loc, true);
-				BufferedWriter out = new BufferedWriter(fstream);
-				if (contentLength == null) {
-					out.write("'Content-Length' not present in Header!	");
-				}
-				else {
-					for (String header : contentLength) {
-						out.write("Content-Length: " + header);
-					}
-				}
-				if (lastModified == null) {
-					out.write("'Last-Modified' not present in Header!");
-					} else {
-						for (String header : lastModified) {
-							out.write("Last-Modified: " + header);
-						}
-					}				
-				out.newLine();
-				out.close();	    		
-	    	}
-	    	catch(IOException e){
-	    		System.out.println("Error\n:"+e);
-	    	}	
-			
-			} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}   */
 
 }
