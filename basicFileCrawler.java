@@ -16,7 +16,7 @@ import java.util.Map;
 
 public class basicFileCrawler{
 
-    private HashSet<String> links;
+    private HashSet<String> links; //hashset recording all URLs
     int i;
     
     public basicFileCrawler() throws IOException 
@@ -26,6 +26,7 @@ public class basicFileCrawler{
       
     }
 
+    //main crawler function to crawl links within a URL
     public void getPageLinks(String URL,String loc) throws IOException 
     {
    
@@ -41,7 +42,7 @@ public class basicFileCrawler{
     	 	if (URL.contains("brynmawr.edu")) 
     		{
   
-    	//4. Check if you have already crawled the URL	 
+    	//Check if you have already crawled the URL	 
         if (!links.contains(URL) && i<=10000) 
         {
         	System.out.println(URL);
@@ -56,30 +57,19 @@ public class basicFileCrawler{
                 //Parse the HTML to extract links to other URLs
                 Elements linksOnPage = document.select("a[href]");
 
-                //For each extracted URL... go back to Step 4.
+                //For each extracted URL, go back into the function to process the URL
                 for (Element page : linksOnPage) {
                     getPageLinks(page.attr("abs:href"), loc);
                 }
-            } catch (IOException e){
+            } 
+	    catch (IOException e){
                 System.err.println("For '" + URL + "': " + e.getMessage());
             }
           }
-		}
-    	  
+	}   	  
     }
    
-    public static void main(String[] args) throws IOException 
-    {
-    	File dir = new File(".");
-		String loc = dir.getCanonicalPath() + File.separator + "responseURLs.txt";
-		FileWriter fstream = new FileWriter(loc, true);
-		BufferedWriter writer = new BufferedWriter(fstream);
-		writer.newLine();
-		writer.close();
-        //1. Pick a URL from the frontier
-        new basicFileCrawler().getPageLinks("http://www.brynmawr.edu/",loc);
-    }
-    
+    //function to write the URL crawled into a file
     public void writeToFile(String URL,String loc ) throws IOException
     {
     	try {
@@ -94,5 +84,17 @@ public class basicFileCrawler{
     		System.out.println("Error\n:"+e);
     	}
     }
-
+	
+	
+    public static void main(String[] args) throws IOException 
+    {
+    	File dir = new File(".");
+		String loc = dir.getCanonicalPath() + File.separator + "responseURLs.txt";
+		FileWriter fstream = new FileWriter(loc, true);
+		BufferedWriter writer = new BufferedWriter(fstream);
+		writer.newLine();
+		writer.close();
+        //1. Pick a URL 
+        new basicFileCrawler().getPageLinks("http://www.brynmawr.edu/",loc);
+    }
 }
